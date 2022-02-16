@@ -1,0 +1,5 @@
+# less-privileged ssh auth used to provide the configuration securely
+PLENNY_SSH_RUNNER=plenny@EXAMPLE
+
+# more-privileged ssh auth for deploying this config to remote host
+PLENNY_SSH_SRC=special_user@EXAMPLE
