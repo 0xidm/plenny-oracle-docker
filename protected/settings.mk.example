@@ -1,3 +1,6 @@
+# indicate which configuration (environment) to use
+PLENNY_ENV=mainnet
+
 # less-privileged ssh auth used to provide the configuration securely
 PLENNY_SSH_RUNNER=plenny@EXAMPLE
 

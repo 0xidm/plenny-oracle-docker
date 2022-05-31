@@ -1,5 +1,14 @@
 # plenny oracle
 
+<!--
+git clone \
+  -c core.sshCommand="/usr/bin/ssh -o IdentitiesOnly=yes -i ~/.ssh/0xidm" \
+  git@github.com:0xidm/0xidm.git
+
+git config --local user.email "0xidm"
+git config --local user.name "0xidm"
+-->
+
 Available make targets:
 
 - `up`: use docker-compose to launch the container with environment settings
@@ -96,11 +105,59 @@ cd /etc/docker/plenny-oracle
 docker-compose up
 ```
 
-<!--
-git clone \
-  -c core.sshCommand="/usr/bin/ssh -o IdentitiesOnly=yes -i ~/.ssh/0xidm" \
-  git@github.com:0xidm/0xidm.git
+## Upgrading
 
-git config --local user.email "0xidm"
-git config --local user.name "0xidm"
--->
+### Obtain upgraded PlennyOracle tarball
+
+Place the Plenny `.tar.gz` in the following location within this project:
+
+`./files/PlennyOracle_Linux_x86_64-v3.X.X-Beta.tar.gz`
+
+### Update version argument in dockerfile
+
+Edit the following line:
+
+`ARG PLENNY_VERSION=3.1.2-Beta`
+
+### Push new state to production host
+
+`make push`
+
+### Build docker image
+
+On production host:
+
+```{bash}
+cd /usr/local/src/plenny-oracle
+make container-build
+```
+
+### Restart docker container
+
+On dev host:
+
+```{bash}
+make unlock
+```
+
+On production host:
+
+```{bash}
+systemctl stop plenny-oracle
+systemctl start plenny-oracle
+```
+
+## Debugging
+
+Attach to docker container:
+
+```{bash}
+docker container attach plenny-oracle
+```
+
+Launch shell inside container:
+
+```{bash}
+cd /usr/local/src/plenny-oracle
+make container-shell-prod
+```

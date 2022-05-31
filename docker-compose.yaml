@@ -4,11 +4,11 @@ services:
   
   plenny-oracle:
     container_name: plenny-oracle
-    image: 0xidm/plenny-oracle:3.0.0
+    image: 0xidm/plenny-oracle:latest
     restart: unless-stopped
     volumes:
       - /usr/local/src/plenny-oracle/config:/home/plenny/.plenny-oracle
     ports:
       - "3001:3001" # Lightning Oracle (TCP)
     command:
-      - /opt/PlennyOracle_Linux_x86_64/PlennyOracle
+      - /opt/PlennyDLSP_Linux_x86_64/PlennyDLSP

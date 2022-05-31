@@ -1,9 +1,6 @@
 # NB: ensure you are in the docker group
 # newgrp docker
 
-PLENNY_ENV=mainnet
-PLENNY_VER=3.0.0
-
 -include protected/settings.mk
 
 help:
@@ -24,15 +21,15 @@ down:
 # docker container
 
 container-build:
-	docker build --tag 0xidm/plenny-oracle:$(PLENNY_VER) .
+	docker build --tag 0xidm/plenny-oracle:latest .
 
 container-shell-dev:
 	@echo "use this invocation during development; relies on environment in ./config"
-	docker run -v $$PWD/config:/home/plenny/.plenny-oracle --rm -it --entrypoint /bin/bash 0xidm/plenny-oracle:$(PLENNY_VER)
+	docker run -v $$PWD/config:/home/plenny/.plenny-oracle --rm -it --entrypoint /bin/bash 0xidm/plenny-oracle:latest
 
 container-shell-prod:
 	@echo "invoke on a deployment host"
-	docker run -v /home/plenny/.plenny-oracle:/home/plenny/.plenny-oracle --rm -it --entrypoint /bin/bash 0xidm/plenny-oracle:$(PLENNY_VER)
+	docker run -v /home/plenny/.plenny-oracle:/home/plenny/.plenny-oracle --rm -it --entrypoint /bin/bash 0xidm/plenny-oracle:latest
 
 ###
 # protected configuration management
