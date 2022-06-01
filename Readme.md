@@ -9,6 +9,8 @@ git config --local user.email "0xidm"
 git config --local user.name "0xidm"
 -->
 
+![](vlan-diagram.png)
+
 Available make targets:
 
 - `up`: use docker-compose to launch the container with environment settings
