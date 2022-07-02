@@ -47,7 +47,7 @@ RUN chown -R plenny:plenny /home/plenny
 ###
 # install PlennyOracle
 
-ARG PLENNY_VERSION=3.1.2-Beta
+ARG PLENNY_VERSION=3.1.3-Beta
 
 COPY ./files/PlennyDLSP_Linux_x86_64-v$PLENNY_VERSION.tar.gz /opt/PlennyDLSP_Linux_x86_64.tar.gz
 RUN tar xfz /opt/PlennyDLSP_Linux_x86_64.tar.gz -C /opt

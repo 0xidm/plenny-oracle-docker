@@ -111,6 +111,8 @@ docker-compose up
 
 ### Obtain upgraded PlennyOracle tarball
 
+https://github.com/PlennyPL2/Decentralized-Lightning-Service-Provider_DLSP/releases
+
 Place the Plenny `.tar.gz` in the following location within this project:
 
 `./files/PlennyOracle_Linux_x86_64-v3.X.X-Beta.tar.gz`
