@@ -1,3 +1,4 @@
 /protected/*.ini*
 /protected/*.mk
 /files/*.tar.gz
+/files/*.zip
