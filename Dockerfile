@@ -1,21 +1,4 @@
-# Build stage for nodejs
 FROM debian:buster-slim
-# from node:16-alpine3.16
-
-# Add build tools.
-# RUN apk --update --no-cache --virtual build-dependencies add \
-#   bash \
-#   git \
-#   curl \
-#   unzip \
-#   ca-certificates \
-#   openssl \
-#   libc6-compat \
-#   linux-headers
-
-  # nodejs \
-  # npm \
-
 
 RUN apt update \
   && apt -y install \
@@ -27,13 +10,6 @@ RUN apt update \
   nodejs \
   npm \
   && apt clean
-
-# COPY ./bin /root/.local/bin
-# RUN touch /root/.bash_profile
-# ENV PATH=/bin:/usr/bin:/usr/local/bin:/root/.local/bin
-# RUN [ "/bin/bash", "--login", "-c", "/root/.local/bin/nvm-install.sh" ]
-# RUN [ "/bin/bash", "--login", "-c", "source /root/.local/bin/nvm-bash.sh && nvm install 10.16.3" ]
-# RUN [ "/bin/bash", "--login", "-c", "source /root/.local/bin/nvm-bash.sh && nvm use --delete-prefix 10.16.3" ]
 
 ###
 # Add a basic user
@@ -52,29 +28,23 @@ RUN chown -R plenny:plenny /home/plenny
 
 ARG PLENNY_VERSION=3.1.4-Beta
 
-COPY ./files/PlennyDLSP_Linux_x86_64-v$PLENNY_VERSION.zip /opt/PlennyDLSP_Linux_x86_64.zip
-RUN unzip /opt/PlennyDLSP_Linux_x86_64.zip -d /opt \
-  && chown -R root:root /opt/PlennyDLSP_Linux_x86_64 \
-  && chmod 755 /opt/PlennyDLSP_Linux_x86_64/PlennyDLSP \
-  && rm /opt/PlennyDLSP_Linux_x86_64/.env \
-  && ln -s /home/plenny/.plenny-oracle/plenny-env.ini /opt/PlennyDLSP_Linux_x86_64/.env \
-  && chown -R plenny:plenny /opt/PlennyDLSP_Linux_x86_64/server
+COPY ./files/PlennyDLSP_Linux_x86_64-v$PLENNY_VERSION.zip /tmp/PlennyDLSP_Linux_x86_64.zip
+RUN unzip /tmp/PlennyDLSP_Linux_x86_64.zip -d /tmp \
+  && chown -R root:root /tmp/PlennyDLSP_Linux_x86_64 \
+  && chmod 755 /tmp/PlennyDLSP_Linux_x86_64/PlennyDLSP \
+  && rm -rf /tmp/PlennyDLSP_Linux_x86_64/server \
+  && mv /tmp/PlennyDLSP_Linux_x86_64 /opt/PlennyDLSP_Linux_x86_64 \
+  && rm /tmp/PlennyDLSP_Linux_x86_64.zip
 
-# install nvm and node modules in the PlennyOracle path
+VOLUME ["/opt/PlennyDLSP_Linux_x86_64/server", "/home/plenny/.plenny-oracle"]
+
+RUN rm /opt/PlennyDLSP_Linux_x86_64/.env \
+  && ln -s /home/plenny/.plenny-oracle/plenny-env.ini /opt/PlennyDLSP_Linux_x86_64/.env
+
 WORKDIR /opt/PlennyDLSP_Linux_x86_64
-# RUN ["/bin/bash", "-c", "source /root/.local/bin/nvm-bash.sh && npm install"]
-# RUN ["/bin/bash", "-c", "source /root/.local/bin/nvm-bash.sh && npm install node-pre-gyp"]
-# RUN ["/bin/bash", "-c", "source /root/.local/bin/nvm-bash.sh && npm install grpc"]
 
-RUN npm install
-RUN npm install node-pre-gyp
-RUN npm install grpc
-
-RUN mkdir -p /opt/PlennyDLSP_Linux_x86_64/server/certificates \
-  && openssl genrsa -out /opt/PlennyDLSP_Linux_x86_64/server/certificates/key.pem \
-  && openssl req -new -key /opt/PlennyDLSP_Linux_x86_64/server/certificates/key.pem -out /opt/PlennyDLSP_Linux_x86_64/server/certificates/csr.pem -subj "/C=US/ST=New York/L=New York/O=localhost/OU=localhost/CN=localhost" \
-  && openssl x509 -req -days 9999 -in /opt/PlennyDLSP_Linux_x86_64/server/certificates/csr.pem -signkey /opt/PlennyDLSP_Linux_x86_64/server/certificates/key.pem -out /opt/PlennyDLSP_Linux_x86_64/server/certificates/cert.pem \
-  && chown plenny:plenny /opt/PlennyDLSP_Linux_x86_64/server/certificates/*
+RUN npm install \
+  && npm install node-pre-gyp grpc
 
 # become user plenny
 USER plenny
