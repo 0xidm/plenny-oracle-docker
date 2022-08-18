@@ -24,6 +24,8 @@ Available make targets:
 
 ## Installation
 
+NB: for docker to work, the plenny user must have the same uid inside the container as on the host.  This ensures the FIFO can be written via ssh.
+
 ### Obtain PlennyOracle
 
 You must first obtain the PlennyOracle software, which is currently in a closed beta.
