@@ -167,3 +167,9 @@ Launch shell inside container:
 cd /usr/local/src/plenny-oracle
 make container-shell-prod
 ```
+
+## Monitoring
+
+```{bash}
+ssh -t USER@HOST "multitail /var/log/plenny-oracle.log /var/log/lnd-plenny.log /var/log/bitcoind-plenny.log -l 'journalctl -f' /var/log/nginx/error.log"
+```
