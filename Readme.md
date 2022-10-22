@@ -9,7 +9,7 @@ git config --local user.email "0xidm"
 git config --local user.name "0xidm"
 -->
 
-![](vlan-diagram.png)
+![](docs/vlan-diagram.png)
 
 Available make targets:
 

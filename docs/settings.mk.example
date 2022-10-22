@@ -1,3 +1,5 @@
+# Place settings.mk in ./protected/ so it is not version controlled
+
 # indicate which configuration (environment) to use
 PLENNY_ENV=mainnet
 

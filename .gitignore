@@ -1,4 +1,4 @@
-/protected/*.ini*
-/protected/*.mk
-/files/*.tar.gz
-/files/*.zip
+/protected/*
+!/protected/.gitkeep
+/files/*
+!/files/.gitkeep
