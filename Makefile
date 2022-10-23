@@ -20,11 +20,14 @@ run:
 		-v ${PWD}/protected/server:/opt/PlennyDLSP_Linux_x86_64/server \
 		0xidm/plenny-oracle:latest
 
-shell:
+run-shell:
 	docker run --rm -it --network host --platform=linux/amd64 \
 		-v plenny-oracle:/opt/PlennyDLSP_Linux_x86_64/server \
 		0xidm/plenny-oracle:latest \
 		/bin/bash
+
+shell:
+	docker exec -it plenny-oracle /bin/bash
 
 ###
 # protected configuration management
