@@ -1,0 +1,25 @@
+[Unit]
+Description=Plenny Oracle Docker Container
+After=network.target docker.socket
+Requires=docker.socket
+
+[Service]
+RestartSec=10
+Restart=always
+
+StandardOutput=append:/var/log/plenny-oracle.log
+StandardError=inherit
+
+# Clean-up bad state if still hanging around
+ExecStartPre=-/usr/bin/docker rm -f plenny-oracle
+
+# Main process
+ExecStart=/usr/bin/docker run --rm \
+    --network host \
+    --name plenny-oracle \
+    -v plenny-oracle:/opt/PlennyDLSP_Linux_x86_64/server \
+    -v /home/plenny/.plenny:/opt/PlennyDLSP_Linux_x86_64/.env \
+    0xidm/plenny-oracle:latest
+
+[Install]
+WantedBy=multi-user.target
