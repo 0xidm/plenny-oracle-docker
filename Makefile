@@ -12,16 +12,16 @@ help:
 # docker
 
 build:
-	docker build --tag 0xidm/plenny-oracle:latest .
+	docker build --network host --tag 0xidm/plenny-oracle:latest .
 
 run:
-	docker run --rm -it --platform=linux/amd64 \
+	docker run --rm -it --network host --platform=linux/amd64 \
 		-v ${PWD}/protected/mainnet.ini:/opt/PlennyDLSP_Linux_x86_64/.env \
 		-v ${PWD}/protected/server:/opt/PlennyDLSP_Linux_x86_64/server \
 		0xidm/plenny-oracle:latest
 
 shell:
-	docker run --rm -it --platform=linux/amd64 \
+	docker run --rm -it --network host --platform=linux/amd64 \
 		-v plenny-oracle:/opt/PlennyDLSP_Linux_x86_64/server \
 		0xidm/plenny-oracle:latest \
 		/bin/bash
