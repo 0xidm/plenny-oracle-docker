@@ -2,9 +2,8 @@ FROM --platform=linux/amd64 node:10-stretch-slim
 
 RUN apt update && apt -y install unzip
 
-ARG PLENNY_VERSION=3.1.4-Beta
-
-COPY ./files/PlennyDLSP_Linux_x86_64-v$PLENNY_VERSION.zip /tmp/PlennyDLSP_Linux_x86_64.zip
+ARG PLENNY_VERSION=v3.1.5-Beta
+COPY ./files/PlennyDLSP_Linux_x86_64-$PLENNY_VERSION.zip /tmp/PlennyDLSP_Linux_x86_64.zip
 
 RUN unzip /tmp/PlennyDLSP_Linux_x86_64.zip -d /tmp \
   && chown -R root:root /tmp/PlennyDLSP_Linux_x86_64 \
